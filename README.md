@@ -1,16 +1,26 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Student Management System — Frontend
+Student-facing web app for course browsing, registration, and payment. Built for PJN Technologies.
+Tech Stack
+	•	React + Vite
+	•	Axios (API calls)
+	•	Razorpay Checkout (payment UI)
+Features
+	•	Course catalog with pricing
+	•	Registration form
+	•	Integrated Razorpay payment flow
+	•	Responsive multi-page layout (Home, Courses, About)
+Project Structure
+src/
+├── api/          # Backend API calls
+├── pages/        # Route-level components (Home, Courses, About)
+├── components/   # Shared UI components
+└── utils/
+Setup
+prerequisites
+•	Node.js 18+
+•	The backend running locally (see student-management-backend repo) at http://localhost:8080
+Run locally : npm install
+              npm run dev --runs on http://localhost:5174.
+Notes
+This frontend expects the backend API to be running and reachable at http://localhost:8080. Update the base URL in src/api/ if deploying to a different environment.
+      

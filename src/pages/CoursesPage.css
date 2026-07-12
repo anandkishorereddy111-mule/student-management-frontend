@@ -1,0 +1,404 @@
+.courses-page {
+  padding-bottom: 100px;
+}
+
+.courses-header {
+  text-align: center;
+  padding: 48px 24px 8px;
+}
+
+.courses-header__eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin: 0 0 10px;
+}
+
+.courses-header h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 4vw, 38px);
+  margin: 0;
+}
+
+.rf-stepper {
+  max-width: 520px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.rf-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.rf-step:last-child {
+  flex: 0;
+}
+
+.rf-step__dot {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.rf-step__dot.is-active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(95, 217, 212, 0.12);
+}
+
+.rf-step__dot.is-done {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1C1200;
+}
+
+.rf-step__label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-left: 8px;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.rf-step__label.is-active {
+  color: var(--text);
+}
+
+.rf-step__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 10px;
+  transition: background 0.4s ease;
+}
+
+.rf-step__line.is-done {
+  background: var(--gold);
+}
+
+@media (max-width: 560px) {
+  .rf-step__label { display: none; }
+}
+
+.rf-section {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 44px 24px 0;
+}
+
+.rf-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rf-section__head h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 24px;
+  margin: 0;
+}
+
+.rf-section__hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.rf-course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.rf-course-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.rf-course-card:hover {
+  border-color: var(--cyan);
+}
+
+.rf-course-card--selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), 0 12px 24px -12px rgba(232, 179, 79, 0.5);
+}
+
+.rf-course-card--skeleton {
+  height: 210px;
+  background: linear-gradient(90deg, var(--card) 0%, var(--bg-soft) 50%, var(--card) 100%);
+  background-size: 200% 100%;
+  animation: rf-shimmer 1.4s infinite;
+  cursor: default;
+}
+
+@keyframes rf-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.rf-course-card__image-wrap {
+  position: relative;
+  height: 130px;
+  background: var(--bg-soft);
+}
+
+.rf-course-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rf-course-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(15, 19, 39, 0.85) 100%);
+}
+
+.rf-course-card__badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--gold);
+  color: #1C1200;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.rf-course-card__body {
+  padding: 14px 16px 18px;
+}
+
+.rf-course-card__body h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0 0 8px;
+  text-transform: capitalize;
+}
+
+.rf-course-card__price {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gold);
+}
+
+.rf-form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.rf-form-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.rf-form-card__head h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0;
+}
+
+.rf-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.rf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rf-field label {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.rf-field input {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 14.5px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rf-field input:focus-visible {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(95, 217, 212, 0.15);
+}
+
+.rf-field input::placeholder {
+  color: #6B7093;
+}
+
+.rf-field input[readonly] {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.rf-form__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.rf-status {
+  margin: 20px 0 0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rf-status--success {
+  background: rgba(111, 207, 151, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(111, 207, 151, 0.3);
+}
+
+.rf-status--error {
+  background: rgba(232, 115, 95, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(232, 115, 95, 0.3);
+}
+
+.rf-check__circle {
+  stroke: var(--success);
+  stroke-width: 3;
+  stroke-dasharray: 145;
+  stroke-dashoffset: 145;
+  animation: rf-draw 0.5s ease-out forwards;
+}
+
+.rf-check__mark {
+  stroke: var(--success);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  animation: rf-draw 0.3s 0.45s ease-out forwards;
+}
+
+@keyframes rf-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.rf-sticky-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  width: min(520px, calc(100% - 32px));
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.55);
+  z-index: 50;
+  animation: rf-slide-up 0.3s ease-out;
+}
+
+@keyframes rf-slide-up {
+  from { opacity: 0; transform: translate(-50%, 16px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.rf-sticky-bar__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rf-sticky-bar__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rf-sticky-bar__info strong {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rf-sticky-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.rf-sticky-bar__price {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 14px;
+}
+
+@media (max-width: 560px) {
+  .rf-form { grid-template-columns: 1fr; }
+  .rf-form-card { padding: 24px 20px; }
+}

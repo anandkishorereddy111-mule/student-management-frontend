@@ -67,7 +67,7 @@ function CoursesPage() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const response = await axios.post('http://localhost:8080/api/students/register', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/students/register`, formData);
       console.log(response.data);
       setStatus("success");
     } catch (error) {
@@ -92,7 +92,7 @@ function CoursesPage() {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/payment/create-order?amount=${selectedCourse.price}&receiptId=receipt_${Date.now()}`
+        `http://student-management-frontend-two-mu.vercel.app/api/payment/create-order?amount=${selectedCourse.price}&receiptId=receipt_${Date.now()}`
       );
       const order = response.data;
 
@@ -107,7 +107,7 @@ function CoursesPage() {
           console.log("Payment Success Payload:", paymentResponse);
           setStatus("loading");
           try {
-            const finalResponse = await axios.post('http://localhost:8080/api/payment/verify', null, {
+            const finalResponse = await axios.post('http://student-management-frontend-two-mu.vercel.app/api/payment/verify', null, {
               params: {
                 razorpay_order_id: paymentResponse.razorpay_order_id,
                 razorpay_payment_id: paymentResponse.razorpay_payment_id,

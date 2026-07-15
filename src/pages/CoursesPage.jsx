@@ -175,13 +175,13 @@ function CoursesPage() {
       <div className="rf-stepper">
         {steps.map((step, idx) => (
           <div className="rf-step" key={step.label}>
-  <div className={`rf-step-dot ${step.done ? "is-done" : ""}`}>
+  <div className={`rf-step_dot ${step.done ? "is-done" : ""}`}>
     {step.done ? "/" : idx + 1}
   </div>
-  <span className={`rf-step-label ${step.done || idx === currentStep ? "is-active" : ""}`}>
+  <span className={`rf-step_label ${step.done || idx === currentStep ? "is-active" : ""}`}>
     {step.label}
   </span>
-  {idx < steps.length - 1 && <div className={`rf-step-line ${step.done ? "is-done" : ""}`} />}
+  {idx < steps.length - 1 && <div className={`rf-step_line ${step.done ? "is-done" : ""}`} />}
 </div>
         ))}
       </div>

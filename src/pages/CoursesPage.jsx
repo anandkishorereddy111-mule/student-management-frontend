@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { createRipple } from "../utils/ripple";
 import "./CoursesPage.css";
@@ -16,6 +16,7 @@ function CoursesPage() {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loadingCourses, setLoadingCourses] = useState(true);
   const [showSticky, setShowSticky] = useState(false);
+  const [revealedIds, setRevealedIds] = useState(new Set());
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -37,7 +38,15 @@ function CoursesPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            const id = entry.target.dataset.revealId;
+            if (id) {
+              setRevealedIds((prev) => {
+                if (prev.has(id)) return prev;
+                const next = new Set(prev);
+                next.add(id);
+                return next;
+              });
+            }
             observer.unobserve(entry.target);
           }
         });
@@ -92,7 +101,7 @@ function CoursesPage() {
 
     try {
       const response = await axios.post(
-        `http://student-management-frontend-two-mu.vercel.app/api/payment/create-order?amount=${selectedCourse.price}&receiptId=receipt_${Date.now()}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/payment/create-order?amount=${selectedCourse.price}&receiptId=receipt_${Date.now()}`
       );
       const order = response.data;
 
@@ -107,7 +116,7 @@ function CoursesPage() {
           console.log("Payment Success Payload:", paymentResponse);
           setStatus("loading");
           try {
-            const finalResponse = await axios.post('http://student-management-frontend-two-mu.vercel.app/api/payment/verify', null, {
+            const finalResponse = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/payment/verify`, null, {
               params: {
                 razorpay_order_id: paymentResponse.razorpay_order_id,
                 razorpay_payment_id: paymentResponse.razorpay_payment_id,
@@ -166,14 +175,14 @@ function CoursesPage() {
       <div className="rf-stepper">
         {steps.map((step, idx) => (
           <div className="rf-step" key={step.label}>
-            <div className={`rf-step__dot${step.done ? " is-done" : ""}${idx === currentStep && !step.done ? " is-active" : ""}`}>
-              {step.done ? "✓" : idx + 1}
-            </div>
-            <span className={`rf-step__label${step.done || idx === currentStep ? " is-active" : ""}`}>
-              {step.label}
-            </span>
-            {idx < steps.length - 1 && <div className={`rf-step__line${step.done ? " is-done" : ""}`} />}
-          </div>
+  <div className={`rf-step-dot ${step.done ? "is-done" : ""}`}>
+    {step.done ? "/" : idx + 1}
+  </div>
+  <span className={`rf-step-label ${step.done || idx === currentStep ? "is-active" : ""}`}>
+    {step.label}
+  </span>
+  {idx < steps.length - 1 && <div className={`rf-step-line ${step.done ? "is-done" : ""}`} />}
+</div>
         ))}
       </div>
 
@@ -193,14 +202,17 @@ function CoursesPage() {
           <div className="rf-course-grid">
             {courses.map((course, idx) => {
               const isSelected = selectedCourse?.courseId === course.courseId;
+              const revealId = `course-${course.courseId}`;
+              const isRevealed = revealedIds.has(revealId);
               return (
                 <div
                   key={course.courseId}
+                  data-reveal-id={revealId}
                   onClick={() => handleCourseSelect(course)}
                   onMouseMove={handleTilt}
                   onMouseLeave={resetTilt}
                   style={{ transitionDelay: `${idx * 70}ms` }}
-                  className={`rf-course-card reveal${isSelected ? " rf-course-card--selected" : ""}`}
+                  className={`rf-course-card reveal${isRevealed ? " is-visible" : ""}${isSelected ? " rf-course-card--selected" : ""}`}
                 >
                   <div className="rf-course-card__image-wrap">
                     <img src={`/images/${course.imageFileName}`} alt={course.courseName} className="rf-course-card__image" />
@@ -219,7 +231,10 @@ function CoursesPage() {
       </section>
 
       <section className="rf-section">
-        <div className="rf-form-card reveal">
+        <div
+          data-reveal-id="form-card"
+          className={`rf-form-card reveal${revealedIds.has("form-card") ? " is-visible" : ""}`}
+        >
           <div className="rf-form-card__head">
             <h2>Your details</h2>
             <span className="rf-section__hint">
@@ -250,7 +265,7 @@ function CoursesPage() {
                 {status === "loading" ? "Registering…" : "Register"}
               </button>
               <button type="button" className="btn btn-outline" onMouseDown={createRipple} onClick={handlePayment} disabled={!selectedCourse}>
-                Pay Now{selectedCourse ? ` · ₹${selectedCourse.price}` : ""}
+                Pay Now{selectedCourse ? " . ₹" + selectedCourse.price : ""}
               </button>
             </div>
           </form>
